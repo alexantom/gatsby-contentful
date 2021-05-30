@@ -1,17 +1,42 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
+process.env.ENABLE_GATSBY_REFRESH_ENDPOINT = true;
+
+const contentfulConfig = {
+  spaceId: process.env.CONTENTFUL_SPACE_ID,
+  accessToken:
+      process.env.CONTENTFUL_ACCESS_TOKEN ||
+      process.env.CONTENTFUL_DELIVERY_TOKEN,
+};
+
+if (process.env.CONTENTFUL_HOST) {
+  contentfulConfig.host = process.env.CONTENTFUL_HOST;
+  contentfulConfig.accessToken = process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN;
+}
+
+const { spaceId, accessToken } = contentfulConfig;
+
+if (!spaceId || !accessToken) {
+  throw new Error(
+      "Contentful spaceId and the access token need to be provided."
+  );
+}
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby with Contentful`,
   },
   plugins: [
     `gatsby-plugin-image`,
+    "gatsby-transformer-remark",
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-sharp",
     {
       resolve: `gatsby-source-contentful`,
-      options: {
-        spaceId: `rocybtov1ozk`,
-        accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
-      },
+      options: contentfulConfig,
     },
-    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -21,7 +46,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
       options: {
-        devMode: false,
+        devMode: true,
         analyzerMode: "static"
       }
     }
