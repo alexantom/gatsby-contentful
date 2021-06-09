@@ -25,14 +25,22 @@ if (!spaceId || !accessToken) {
 }
 
 module.exports = {
+  flags: {
+    FAST_DEV: true,
+    DEV_SSR: true,
+    FAST_REFRESH: true,
+    PRESERVE_WEBPACK_CACHE: true,
+    PRESERVE_FILE_DOWNLOAD_CACHE: true,
+    PARALLEL_SOURCING: true,
+  },
   siteMetadata: {
     title: `Gatsby with Contentful`,
   },
   plugins: [
     `gatsby-plugin-image`,
     "gatsby-transformer-remark",
-    "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
     {
       resolve: `gatsby-source-contentful`,
       options: contentfulConfig,
@@ -46,7 +54,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
       options: {
-        devMode: true,
+        devMode: false,
         analyzerMode: "static"
       }
     }

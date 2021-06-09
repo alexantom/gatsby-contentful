@@ -2,7 +2,7 @@ import React from "react"
 import * as PropTypes from "prop-types"
 
 import { Link, graphql } from "gatsby"
-import { GatsbyImage } from "gatsby-plugin-image"
+import { GatsbyImage, StaticImage } from "gatsby-plugin-image"
 
 import { rhythm } from "../utils/typography"
 import Layout from "../layouts"
@@ -12,7 +12,6 @@ const propTypes = {
 }
 
 const Blog = ({ node }) => {
-  console.log(node,'--43--')
   return (
     <div>
       <Link
@@ -34,6 +33,8 @@ const Blog = ({ node }) => {
                 image={node.image.gatsbyImageData}
             />
           </div>
+
+
           <div style={{ flex: 1 }}><Link to={node.gatsbyPath}>{node.title}</Link></div>
         </div>
       </Link>
@@ -50,6 +51,9 @@ class IndexPage extends React.Component {
           <h2>{`Gatsby's`} integration with the Contentful Image API</h2>
           <Link to="/image-api/">See examples</Link>
           <br />
+          <div>
+              <StaticImage src="https://images.unsplash.com/photo-1619538189193-2c20c210f8b6?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="A dinosaur" />
+          </div>
           <br />
           <br />
           <h2>Localization</h2>
